@@ -6,7 +6,7 @@ from subprocess import run
 from threading import Thread
 
 from cloudlink import CloudLink
-from meower import meower
+import meower
 from requests import get
 from websocket import WebSocketConnectionClosedException
 
