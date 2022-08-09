@@ -79,7 +79,6 @@ class Client:
         self.auto_reconect_time = reconect_time
         self.username = meower_username
         self.password = meower_password
-        
 
         self._wss = CloudLink(debug)
         self.ulist = self._wss.userlist
@@ -99,19 +98,18 @@ class Client:
         """
         packet = loads(packet)
 
-        if ("listener" in data):
+        if "listener" in data:
 
-            listerner = {"detected": True, "listener": packet["listener"] }
+            listerner = {"detected": True, "listener": packet["listener"]}
         else:
-            listerner = {"detected": False, "listener":"" }
-        
+            listerner = {"detected": False, "listener": ""}
 
         if packet["cmd"] == "statuscode":
             try:
                 self.callbacks["on_status_change"](packet["val"], listerner)
             except KeyError:
                 pass
-        
+
         elif packet["cmd"] == "pvar":
             try:
                 # possible err, forgot keys of
@@ -123,7 +121,9 @@ class Client:
 
         elif packet["cmd"] == "pmsg":
             try:
-                self.callbacks["handle_pmsg"](packet["val"], packet["origin"], listerner)
+                self.callbacks["handle_pmsg"](
+                    packet["val"], packet["origin"], listerner
+                )
             except KeyError:
                 pass
         elif packet["cmd"] == "ulist":
@@ -136,8 +136,7 @@ class Client:
                 self.callbacks["on_raw_msg"](packet["val"], listerner)
             else:
                 self.callbacks["on_raw_packet"](packet, listerner)
-            
-        
+
     @property()
     def get_ulist(self):
         """gets the u!ist from meower"""
@@ -182,7 +181,7 @@ class Client:
         time.sleep(0.8)
 
         self._login_callback()
-        self.currently_connecting= False
+        self.currently_connecting = False
         try:
             self.callbacks["on_login"]()
         except KeyError:
@@ -287,10 +286,10 @@ class Client:
                 msg["p"] = msg["p"].split(":")[1].strip()
             if msg["p"].startswith(f"@{self.username}"):
                 self.send_msg(f'Hello, {msg["u"]}!')
-     
+
     def on_status_change(self, statuscode):
-        self.statuscode = statuscode   
-    
+        self.statuscode = statuscode
+
     def default_callbacks(self):
         """
         sets the callbacks back to there original callbacks
