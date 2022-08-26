@@ -1,5 +1,9 @@
 # MeowerBot.py
 
+# MOVED
+
+https://github.com/MeowerBots/MeowerBot.py
+
 A bot lib for Meower
 
 ## How to use
